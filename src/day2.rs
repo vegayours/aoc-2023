@@ -17,7 +17,7 @@ fn parse_round(l: &str) -> Round {
     let parts: Vec<&str> = l.split(", ").collect();
     let mut round = Round { r: 0, g: 0, b: 0 };
     for p in parts {
-        let items: Vec<&str> = p.split(" ").collect();
+        let items: Vec<&str> = p.split(' ').collect();
         let val: i64 = items[0].parse().unwrap();
         match items[1] {
             "red" => round.r += val,
@@ -30,11 +30,11 @@ fn parse_round(l: &str) -> Round {
 }
 
 fn parse_game(index: i64, l: &str) -> Game {
-    let rounds = l.split(": ").into_iter().skip(1).next().unwrap();
+    let rounds = l.split(": ").nth(1).unwrap();
 
     Game {
         id: index,
-        rounds: rounds.split("; ").into_iter().map(parse_round).collect(),
+        rounds: rounds.split("; ").map(parse_round).collect(),
     }
 }
 

@@ -8,7 +8,6 @@ type Input = Vec<Vec<u8>>;
 fn parse(input: &str) -> Input {
     input
         .lines()
-        .into_iter()
         .map(|l| Vec::from(l.as_bytes()))
         .collect()
 }
@@ -33,7 +32,7 @@ fn parse_numbers(input: &Input) -> Vec<Number> {
                 let mut k = j;
                 while k < n && input[i][k].is_ascii_digit() {
                     number = number * 10 + (input[i][k] - b'0') as i64;
-                    k = k + 1;
+                    k += 1;
                 }
 
                 let l = if j > 0 { j - 1 } else { j };
@@ -104,7 +103,6 @@ fn part2(input: &Input) -> i64 {
         }
     }
     map.values()
-        .into_iter()
         .filter(|v| v.len() == 2)
         .map(|v| v[0] * v[1])
         .sum()

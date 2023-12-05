@@ -8,7 +8,7 @@ struct Game {
 }
 
 fn parse_game(line: &str) -> Game {
-    let src = line.split(": ").skip(1).next().unwrap();
+    let src = line.split(": ").nth(1).unwrap();
     let parts: Vec<&str> = src.split(" | ").collect();
     Game {
         win: parts[0]
@@ -48,7 +48,7 @@ fn part1(input: &[Game]) -> i64 {
 #[aoc(day4, part2)]
 fn part2(input: &[Game]) -> i64 {
     let mut m: HashMap<usize, usize> = HashMap::new();
-    for (i, game) in input.into_iter().enumerate() {
+    for (i, game) in input.iter().enumerate() {
         let matching = game.your.iter().filter(|x| game.win.contains(x)).count();
         let card = i + 1;
         let cnt = {
