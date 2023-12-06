@@ -53,6 +53,7 @@ fn parse(input: &str) -> Input {
                     }
                 }
             }
+            mapping.sort_by(|a, b| a.src.cmp(&b.src));
             mappings.push(mapping);
         } else {
             break;
@@ -97,9 +98,32 @@ fn part1(input: &Input) -> i64 {
         .unwrap()
 }
 
+fn process_segment((mut start, end): (i64, i64), mapping: &Mapping) -> Vec<(i64, i64)> {
+    let mut res = Vec::new();
+    for range in mapping {
+        if start < range.src {
+            let consume = (end - start).min(range.src - start);
+            if consume > 0 {
+                res.push((start, start + consume));
+                start += consume;
+            }
+        }
+        let skip = (start - range.src).min(range.len);
+        let consume = (end - start).min(range.len - skip);
+        if consume > 0 {
+            res.push((range.dst + skip, range.dst + skip + consume));
+            start += consume;
+        }
+    }
+    if start < end {
+        res.push((start, end));
+    }
+    res
+}
+
 #[aoc(day5, part2)]
 fn part2(input: &Input) -> i64 {
-    input
+    let mut segments: Vec<(i64, i64)> = input
         .seeds
         .iter()
         .copied()
@@ -108,13 +132,17 @@ fn part2(input: &Input) -> i64 {
         .map(|mut chunk| {
             let start = chunk.next().unwrap();
             let len = chunk.next().unwrap();
-            (start..start + len)
-                .map(|s| map_seed(input, s))
-                .min()
-                .unwrap()
+            (start, start + len)
         })
-        .min()
-        .unwrap()
+        .collect();
+    for mapping in &input.mappings {
+        segments = segments
+            .into_iter()
+            .flat_map(|s| process_segment(s, mapping).into_iter())
+            .collect();
+    }
+
+    segments.into_iter().map(|(s, _)| s).min().unwrap()
 }
 
 #[cfg(test)]
