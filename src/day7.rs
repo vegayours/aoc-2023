@@ -45,18 +45,18 @@ fn parse(input: &str, map_char: fn(char) -> char) -> Vec<Hand> {
 }
 
 fn score_hand_p1(hand: &Hand) -> i64 {
-    let mut count: HashMap<char, i64> = HashMap::new();
+    let mut count: HashMap<char, u32> = HashMap::new();
     for c in hand.cards.chars() {
         *count.entry(c).or_default() += 1;
     }
     count
         .values()
-        .map(|v| std::iter::repeat(4).take(*v as usize).product::<i64>())
+        .map(|v| 4_i64.pow(*v))
         .sum()
 }
 
 fn score_hand_p2(hand: &Hand) -> i64 {
-    let mut count: HashMap<char, i64> = HashMap::new();
+    let mut count: HashMap<char, u32> = HashMap::new();
     for c in hand.cards.chars() {
         *count.entry(c).or_default() += 1;
     }
@@ -69,7 +69,7 @@ fn score_hand_p2(hand: &Hand) -> i64 {
     }
     count
         .values()
-        .map(|v| std::iter::repeat(4).take(*v as usize).product::<i64>())
+        .map(|v| 4_i64.pow(*v))
         .sum()
 }
 
