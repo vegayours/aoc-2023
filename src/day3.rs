@@ -6,10 +6,7 @@ type Input = Vec<Vec<u8>>;
 
 #[aoc_generator(day3)]
 fn parse(input: &str) -> Input {
-    input
-        .lines()
-        .map(|l| Vec::from(l.as_bytes()))
-        .collect()
+    input.lines().map(|l| Vec::from(l.as_bytes())).collect()
 }
 
 struct Number {

@@ -59,7 +59,6 @@ fn part2(input: &[Game]) -> i64 {
         for j in 1..=matching {
             *m.entry(card + j).or_default() += cnt;
         }
-
     }
     m.values().sum::<usize>() as i64
 }
