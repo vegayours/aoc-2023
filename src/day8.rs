@@ -85,10 +85,10 @@ fn find_cycle(input: &Input, start: &String) -> (Vec<usize>, usize) {
 
     let (cycle_start, cycle_len) = loop {
         let (i, d) = seq.next().unwrap();
-        match visited.get(&(key, i)) {
-            Some(val) => break (*val, cnt - *val),
-            _ => {}
+        if let Some(val) = visited.get(&(key, i)) {
+            break (*val, cnt - *val);
         };
+
         visited.insert((key, i), cnt);
 
         cnt += 1;

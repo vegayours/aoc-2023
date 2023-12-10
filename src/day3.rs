@@ -18,17 +18,16 @@ struct Number {
 
 fn parse_numbers(input: &Input) -> Vec<Number> {
     let mut result = Vec::new();
-    let m = input.len();
     let n = input[0].len();
 
-    for i in 0..m {
+    for (i, row) in input.iter().enumerate() {
         for j in 0..n {
-            if input[i][j].is_ascii_digit() && (j == 0 || !input[i][j - 1].is_ascii_digit()) {
+            if row[j].is_ascii_digit() && (j == 0 || !row[j - 1].is_ascii_digit()) {
                 let mut number = 0;
 
                 let mut k = j;
-                while k < n && input[i][k].is_ascii_digit() {
-                    number = number * 10 + (input[i][k] - b'0') as i64;
+                while k < n && row[k].is_ascii_digit() {
+                    number = number * 10 + (row[k] - b'0') as i64;
                     k += 1;
                 }
 

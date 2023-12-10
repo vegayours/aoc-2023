@@ -49,10 +49,7 @@ fn score_hand_p1(hand: &Hand) -> i64 {
     for c in hand.cards.chars() {
         *count.entry(c).or_default() += 1;
     }
-    count
-        .values()
-        .map(|v| 4_i64.pow(*v))
-        .sum()
+    count.values().map(|v| 4_i64.pow(*v)).sum()
 }
 
 fn score_hand_p2(hand: &Hand) -> i64 {
@@ -67,10 +64,7 @@ fn score_hand_p2(hand: &Hand) -> i64 {
             count.insert('0', add);
         }
     }
-    count
-        .values()
-        .map(|v| 4_i64.pow(*v))
-        .sum()
+    count.values().map(|v| 4_i64.pow(*v)).sum()
 }
 
 fn solve(input: &str, map_char: fn(char) -> char, score_hand: fn(hand: &Hand) -> i64) -> i64 {
